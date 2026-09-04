@@ -1,17 +1,43 @@
 ---
-
+// 这是 frontmatter，服务端/构建时运行，不会进浏览器
+const title = "A-Tool Site";
+const tools = [
+  { name: "Markdown", desc: "轻量标记语言" },
+  { name: "Timer",    desc: "专注计时器" },
+  { name: "Notes",    desc: "快速笔记" },
+];
 ---
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main>
+      <h1>欢迎来到 {title} 👋</h1>
+      <p>这是一个用 Astro 搭建的简单工具站。</p>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+      <ul class="tools">
+        {tools.map((t) => (
+          <li>
+            <strong>{t.name}</strong>: {t.desc}
+          </li>
+        ))}
+      </ul>
+    </main>
+
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 640px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        color: #222;
+      }
+      h1 { color: #0d6efd; }
+      .tools { line-height: 1.8; }
+    </style>
+  </body>
 </html>
