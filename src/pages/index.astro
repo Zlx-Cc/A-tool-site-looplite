@@ -1,43 +1,412 @@
 ---
-// 这是 frontmatter，服务端/构建时运行，不会进浏览器
-const title = "A-Tool Site";
+/**
+ * looptool 主页
+ * 极简、快速、强大的在线工具集合入口
+ */
+
+// 工具数据：集中管理，便于后续扩展
 const tools = [
-  { name: "Markdown", desc: "轻量标记语言" },
-  { name: "Timer",    desc: "专注计时器" },
-  { name: "Notes",    desc: "快速笔记" },
+  {
+    icon: "📝",
+    name: "JSON 格式化",
+    desc: "轻量级 JSON 校验与美化工具",
+    href: "/tools/json",
+  },
+  {
+    icon: "⏱️",
+    name: "时间戳转换",
+    desc: "毫秒/秒级时间戳互转",
+    href: "/tools/timestamp",
+  },
+  {
+    icon: "🔐",
+    name: "Base64 编解码",
+    desc: "文本与 Base64 快速转换",
+    href: "/tools/base64",
+  },
+  {
+    icon: "🔍",
+    name: "正则表达式",
+    desc: "实时测试与调试正则",
+    href: "/tools/regex",
+  },
+  {
+    icon: "🎨",
+    name: "颜色拾取器",
+    desc: "HEX/RGB/HSL 颜色转换",
+    href: "/tools/color",
+  },
+  {
+    icon: "🔲",
+    name: "二维码生成",
+    desc: "输入文本即刻生成二维码",
+    href: "/tools/qrcode",
+  },
 ];
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <!-- 视口设置：移动端适配 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <meta name="description" content="looptool - 纯静态、无广告、不追踪的在线工具集合" />
+    <title>looptool · 少即是多，快即是强</title>
   </head>
   <body>
-    <main>
-      <h1>欢迎来到 {title} 👋</h1>
-      <p>这是一个用 Astro 搭建的简单工具站。</p>
+    <!-- ========== 导航栏 ========== -->
+    <header class="site-header">
+      <nav class="nav-container">
+        <!-- Logo：品牌标识 -->
+        <a href="/" class="logo">looptool</a>
 
-      <ul class="tools">
-        {tools.map((t) => (
-          <li>
-            <strong>{t.name}</strong>: {t.desc}
-          </li>
-        ))}
-      </ul>
+        <!-- 导航链接 -->
+        <div class="nav-links">
+          <a href="/tools">工具集</a>
+          <a href="/about">关于</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ========== 主视觉区 ========== -->
+      <section class="hero">
+        <h1>少即是多，快即是强。</h1>
+        <p class="hero-subtitle">
+          looptool 是一个纯静态、无广告、不追踪的在线工具集合。所有处理均在本地完成，即开即用。
+        </p>
+
+        <!-- 搜索框：纯视觉占位，无 JS -->
+        <div class="search-box">
+          <!-- 搜索图标（内联 SVG） -->
+          <svg
+            class="search-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            class="search-input"
+            placeholder="搜索工具，如 JSON、时间戳..."
+            aria-label="搜索工具"
+          />
+        </div>
+      </section>
+
+      <!-- ========== 工具网格 ========== -->
+      <section class="tools-section">
+        <h2 class="section-title">所有工具</h2>
+
+        <div class="tools-grid">
+          <!-- 遍历工具数据，渲染卡片 -->
+          {tools.map((tool) => (
+            <a href={tool.href} class="tool-card">
+              <span class="tool-icon" aria-hidden="true">{tool.icon}</span>
+              <span class="tool-name">{tool.name}</span>
+              <span class="tool-desc">{tool.desc}</span>
+            </a>
+          ))}
+        </div>
+      </section>
     </main>
 
+    <!-- ========== 页脚 ========== -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <!-- 版权信息 -->
+        <span class="copyright">© 2024 looptool. All rights reserved.</span>
+
+        <!-- GitHub 链接（内联 SVG 图标） -->
+        <a href="https://github.com" class="github-link" target="_blank" rel="noopener noreferrer">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405s2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </footer>
+
+    <!-- ========== 样式（Scoped CSS） ========== -->
     <style>
-      body {
-        font-family: system-ui, sans-serif;
-        max-width: 640px;
-        margin: 2rem auto;
-        padding: 0 1rem;
-        color: #222;
+      /* ---------- 基础重置 ---------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
-      h1 { color: #0d6efd; }
-      .tools { line-height: 1.8; }
+
+      /* ---------- 全局样式 ---------- */
+      html {
+        -webkit-text-size-adjust: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        /* 系统默认字体栈：无外部字体请求 */
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ---------- 布局容器 ---------- */
+      .nav-container,
+      .hero,
+      .tools-section,
+      .footer-container {
+        width: 100%;
+        max-width: 960px; /* 居中，阅读舒适 */
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* ---------- 导航栏 ---------- */
+      .site-header {
+        border-bottom: 1px solid #eaeaea; /* 极细分割线 */
+        padding: 1.25rem 0;
+      }
+
+      .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #1a1a1a;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.75rem;
+      }
+
+      .nav-links a {
+        font-size: 0.95rem;
+        color: #666666;
+        transition: color 0.15s ease;
+      }
+
+      .nav-links a:hover {
+        color: #1a1a1a; /* hover 变深灰，无下划线 */
+      }
+
+      /* ---------- 主视觉区 ---------- */
+      .hero {
+        margin-top: 8rem; /* 大量顶部留白 */
+        margin-bottom: 5rem;
+        text-align: left;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        color: #1a1a1a;
+        margin-bottom: 1.25rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.125rem;
+        color: #666666;
+        max-width: 600px;
+        line-height: 1.7;
+        margin-bottom: 2.5rem;
+      }
+
+      /* 搜索框 */
+      .search-box {
+        position: relative;
+        max-width: 480px;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 0.875rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999999;
+        pointer-events: none;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        font-size: 0.95rem;
+        font-family: inherit;
+        color: #1a1a1a;
+        background: #ffffff;
+        border: 1px solid #eaeaea;
+        border-radius: 6px; /* 小圆角 */
+        outline: none;
+        transition: border-color 0.15s ease;
+      }
+
+      .search-input::placeholder {
+        color: #999999;
+      }
+
+      .search-input:focus {
+        border-color: #2563eb; /* 强调色：深蓝 */
+      }
+
+      /* ---------- 工具网格 ---------- */
+      .tools-section {
+        margin-bottom: 6rem;
+      }
+
+      .section-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #666666;
+        margin-bottom: 1.5rem;
+      }
+
+      .tools-grid {
+        display: grid;
+        gap: 1.5rem;
+        /* 移动端 1 列 → 平板 2 列 → 桌面 3 列 */
+        grid-template-columns: 1fr;
+      }
+
+      @media (min-width: 600px) {
+        .tools-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 900px) {
+        .tools-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* 工具卡片 */
+      .tool-card {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        background: #ffffff;
+        border: 1px solid #eaeaea;
+        border-radius: 6px;
+        transition: border-color 0.15s ease, background 0.15s ease;
+      }
+
+      .tool-card:hover {
+        border-color: #000000; /* hover 边框变黑 */
+        background: #f9f9f9;   /* hover 背景微灰 */
+      }
+
+      .tool-icon {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+        line-height: 1;
+      }
+
+      .tool-name {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0.35rem;
+      }
+
+      .tool-desc {
+        font-size: 0.85rem;
+        color: #666666;
+        line-height: 1.5;
+      }
+
+      /* ---------- 页脚 ---------- */
+      .site-footer {
+        margin-top: auto; /* 推至底部 */
+        border-top: 1px solid #eaeaea;
+        padding: 1.5rem 0;
+      }
+
+      .footer-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.875rem;
+        color: #666666;
+      }
+
+      .github-link {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: #666666;
+        transition: color 0.15s ease;
+      }
+
+      .github-link:hover {
+        color: #1a1a1a;
+      }
+
+      /* ---------- 响应式微调 ---------- */
+      @media (max-width: 640px) {
+        .hero {
+          margin-top: 5rem;
+          margin-bottom: 3.5rem;
+        }
+
+        .hero h1 {
+          font-size: 2.25rem;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+
+        .nav-container,
+        .hero,
+        .tools-section,
+        .footer-container {
+          padding: 0 1rem;
+        }
+
+        .footer-container {
+          flex-direction: column;
+          gap: 0.75rem;
+          text-align: center;
+        }
+      }
     </style>
   </body>
 </html>
