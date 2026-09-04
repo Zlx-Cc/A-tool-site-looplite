@@ -1,0 +1,15 @@
+a,
+button,
+input[type="button"],
+input[type="submit"],
+label,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 老 iOS 兜底 */
+}
+
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
